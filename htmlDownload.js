@@ -23,7 +23,6 @@ var main_page_list = [];
 var $main_page_data;
 var fileName = [];
 
-//TEST용 주석
 
 //리스트 카운트 
 var list_Count = 0;
@@ -39,7 +38,7 @@ var testTxt =savedir+ " ";
 
 // 수우정
 
-
+//
 async function createDir(DirNamePath){
     
    await fs.readdir(DirNamePath)
@@ -89,10 +88,9 @@ client.set('headers',{
 async function mainpagefunc(mainpageUrl)
 {
     return new Promise(function(resolve,reject){
-        client.fetch(mainpageUrl,param, function(err,$,res)  {
-            if(err) { console.log("Error:",err); return}
+        client.fetch(mainpageUrl,param,function(err,$,res)  {
+            console.log("1");
             
-            //main_page
             $(".item-thumb").each(function(idx){
                 var item = $(this).html();
                 
@@ -107,15 +105,32 @@ async function mainpagefunc(mainpageUrl)
                     main_page_list.push(idx.replace("href=\"",""));
                 })
                   
-            });
-            
+            })
+    
+            setTimeout(function(){
+                console.log(fileName);
+                resolve();
+            },1000*3)
+               
         })
+            
     })
+        
 
+        
 }
+/*
 
-https://github.com/kd0547/crawling.git
-//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
+
+if(err) { console.log("Error:",err); return}
+ //main_page
+        
+
+ */
+
+
+
+//메인페이지 URL page=? 사용하는 함수
 function imgpageurl(FileName,urlPath)
 {
     client.fetch(urlPath,param,function(err,$,res) {
@@ -144,8 +159,6 @@ function imgpageurl(FileName,urlPath)
             var item = $(this).html();
             ///data-src="https:\/\/[/a-zA-Z/0-9/-]+[/a-zA-Z/0-9/-/./?/=/&/;/_/%/-]+/g
     
-            //coser-果咩酱w-vol-023-反派角色-25-photos-23544
-            //https://image2 이면 종료하고 아니면 무야호 실행
             if(item.search(img_reg) != -1)
             {
                 console.log(item.search(img_reg));
@@ -174,19 +187,27 @@ function imgpageurl(FileName,urlPath)
     })
     
 }
+//파일 다운로드 
 function file_download(fileName,filePath,imgUrl){
     var File_Path = filePath + fileName+".jpg";
     request(imgUrl).pipe(fs1.createWriteStream(File_Path));
 }
 
 
+// TEST 함수
 async function func(){
 
-    let func1 = await new  Promise(function(resolve,reject){
-        mainpagefunc(main_pageUrl);
-        console.log("test"+fileName);
+    await mainpagefunc(main_pageUrl);
+
+    
+    console.log("2");
+
+    let func1 = new  Promise(function(resolve,reject){
+        
+        
     });
     func1.then(function(){
+        /*
         var i=0;
         do{
             
@@ -212,16 +233,19 @@ async function func(){
             
           list_Count++
         } while(list_Count<((list.length)/2))
+        */
     })
+    
         
 }
 
 
 func();
+//TEST 함수
 
 
 
-
+//실행 
 function start()
 {
     while(true)//파일 종료 코드  main_pageCount
@@ -255,10 +279,6 @@ function start()
 
 
 //imgpageurl(fileName[0],main_url+main_page_list[0]);
-
-
-
-
     /*
 
          //alt 추출 > 파일 제목으로 쓸꺼임
