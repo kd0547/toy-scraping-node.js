@@ -84,7 +84,8 @@ client.set('headers',{
 /*
 
 */
-
+// 비동기 처리 -> 동기 처리로 변경 
+//async await promise
 async function mainpagefunc(mainpageUrl)
 {
     return new Promise(function(resolve,reject){
