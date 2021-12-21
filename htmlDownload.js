@@ -261,7 +261,8 @@ async function func(){
     await imgpageurl(fileName[5],SUrlPath);
     
     //console.log(main_page_list);
-    
+
+    //test
 
     do { //main_page_list
         do{//이미지 추출 후 저장 
