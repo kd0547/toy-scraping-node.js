@@ -254,12 +254,6 @@ async function func(){
     var i=0;
     
     await mainpagefunc(main_pageUrl);
-
-    var SUrlPath = encodeURI(main_url+main_page_list[5]+list_url+list_Count);
-    var j=0;//url
-    
-    await imgpageurl(fileName[5],SUrlPath);
-    
     //console.log(main_page_list);
 
     //test
