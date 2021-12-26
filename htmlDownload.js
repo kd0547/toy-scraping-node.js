@@ -16,7 +16,7 @@ var savedir = "G:\\";
 var param = {};
 
 //다음 페이지 전환 https://buondua.com/?start=20
-var main_pageCount = 0;
+var main_pageCount =200;
 var main_pageUrl = main_url+"?start="+main_pageCount;
 
 //파일이 없을 때 파일이름을 사용해서 생성할거임
@@ -104,7 +104,56 @@ function file_download(fileName,filePath,imgUrl){
     })
     
 }
+//파일의 메인 경로, 항상 지정된 경로에 저장 
+//현재는 임시로 지정
+const logfilePath = "G:\\";
+//파일 이름, 이름은 절대 안바뀜 
+const logfile = "LogFile.txt";
  
+function logFileAccessCheck()
+{ //파일 확인 없으면 생성, 동기처리
+    //반환값 1 -> 있음, 0 -> 없음
+    try {
+        fs1.readFileSync(logfilePath+logfile)
+
+        return 1;
+    } catch (error) {
+        if(error.code == "ENOENT")
+        {
+            fs1.writeFileSync(logfilePath+logfile,"")
+
+            return 0;
+        }
+    }
+}
+let FileWriteStream ;
+let FilereadStream;
+function fileLogUpload() 
+{ // 컴퓨터 -> 프로그램
+    logFileAccessCheck()
+    FileWriteStream = fs1.createWriteStream(logfilePath+logfile,{flags:'a'});
+
+    FilereadStream = fs1.createReadStream(logfilePath+logfile,{flags:'r'});
+
+    FilereadStream.on('data',(data)=>{
+        console.log(data.toString().split("\n").forEach((data)=>{
+            if(data == "Coser白银81 Vol87 9月会员合集(3期) (90 photos)")
+            {
+                console.log("1");
+            }
+        }));
+    })
+    //console.log(FilereadStream)
+
+}
+
+function fileLogDownload(fileName)
+{ // 프로그램 -> 컴퓨터
+    
+
+    FileWriteStream.write(fileName+"\n");
+}
+
 
 
 
@@ -142,7 +191,7 @@ function mainpagefunc(mainpageUrl)
 
             setTimeout(function(){
                 resolve();
-            },1000)
+            },500)
 
             
         })
@@ -214,7 +263,7 @@ function imgpageurl(FileName,urlPath)
                     //alt="[/一-龥/가-힇ㄱ-ㅎㅏ-ㅣ/a-zA-Z/0-9/_/./-/\s/:/(/)-/;/&/"/]
                     //alt="[/一-龥/가-힇ㄱ-ㅎㅏ-ㅣ/a-zA-Z/0-9/_/./-/\s/:/(/)-]
                     
-                    item.match(/alt=".[^>]+/g)
+                    item.match(/alt=".[^>"]+/g)
                     .forEach((idx)=>{
                         img_fname.push((idx.replace("alt=\"","")).replace(":","").replace(/>+/g,""));
                        
@@ -225,7 +274,7 @@ function imgpageurl(FileName,urlPath)
             })
             setTimeout(function(){
                 resolve();
-            },1000*1)
+            },500)
             
         })
     })
@@ -237,8 +286,6 @@ function imgpageurl(FileName,urlPath)
 
 // TEST 함수
 async function func(){
-
-    
      /*
         mainpagefunc함수 리턴 값 
         fileName : 디렉토리 파일 이름으로 사용할 변수를 저장 
@@ -250,15 +297,16 @@ async function func(){
         img_url : 이미지 URL
         img_fname : 파일 이름으로 사용 
     */
-
     var i=0;
-    
+    fileLogUpload()
+ 
     await mainpagefunc(main_pageUrl);
     //console.log(main_page_list);
 
     //test
-
+/*
     do { //main_page_list
+        fileLogDownload(fileName[i]);
         do{//이미지 추출 후 저장 
                 
             var SUrlPath = encodeURI(main_url+main_page_list[i]+list_url+list_Count);
@@ -271,6 +319,8 @@ async function func(){
             console.log("img_fname 길이"+img_fname.length);
             console.log("이미지 count : "+list_Count);
             await createDir(savedir+fileName[i]);
+
+            
             while(j < img_url.length)//img_url
             {
                 console.log("디렉토리 이름 "+fileName[i]);
@@ -293,11 +343,11 @@ async function func(){
         img_url = [];
         img_fname = [];
     }while(i<main_page_list.length)
-    
+*/
 }
 
 func();
-//TEST 함수
+
 
 //Test
 
@@ -350,7 +400,5 @@ async function start()
         });
     */
     
-
-
 
 

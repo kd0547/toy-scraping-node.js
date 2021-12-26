@@ -55,9 +55,15 @@ data-src=\"https://images2
 
 
  
+ 2021-12-21
  
  
- 
-  
+  **** 추가 ****
+1.
+이미지의 URL이
+data-src=\"https://images2
+> 만들었고 정상적으로 동작함 
 
+일단 한 페이지만 가져오게 만들었음 
 
+scraping
