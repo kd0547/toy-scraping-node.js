@@ -11,7 +11,7 @@ const { getHashes } = require('crypto');
 
 
 //메인 url, 파일 저장 경로
-var main_url = "https://buondua.com";
+var main_url = "";
 var savedir = "G:\\";
 var param = {};
 
